@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var handler = require('./dbhandler.js');
+var handler = require('./dbuserhandler.js');
 var crypto = require('crypto');
 
 /* GET users listing. */
@@ -14,7 +14,7 @@ router.get('/', function (req, res, next) {
 router.post('/login', function (req, res, next) {
 	var md5 = crypto.createHash('md5');
 	var password = md5.update(req.body.password).digest('base64');
-	handler(req, res, "user", { name: req.body.username }, function (data) {
+	handler(req, res, "user", { userName: req.body.username }, function (data) {
 		// 返回结果
 		let result = {
 			msg: '',
@@ -27,6 +27,8 @@ router.post('/login', function (req, res, next) {
 			result.msg = "密码不正确"
 			res.end(JSON.stringify(result))
 		} else if (data.length !== 0 && data[0].password === password) {
+			res.cookie('admin_token', 'true')
+		 
 			req.session.username = req.body.username; //存session
 			req.session.password = password;
 			// 返回结果
@@ -43,7 +45,12 @@ router.post('/login', function (req, res, next) {
 
 // 退出登录
 router.post('/logout', function (req, res, next) {
-	res.end('{"success":"true"}');
+	res.cookie('admin_token', '')
+	let result = {
+		msg: '退出成功',
+		code: 200
+	}
+	res.end(JSON.stringify(result))
 });
 
 // 查询管理员列表
@@ -112,7 +119,7 @@ router.post('/update', function (req, res, next) {
 		if (data.length === 0) {
 			res.end(JSON.stringify(result))
 		} else {
-			result.msg = 'success'
+			result.msg = '修改成功'
 			result.code = 200
 			result.result = true
 			res.end(JSON.stringify(result))
@@ -125,13 +132,13 @@ router.post('/update', function (req, res, next) {
 router.post('/delete', function (req, res, next) {
 	handler(req, res, "user", req.body, function (data) {
 		let result = {
-			msg: 'error',
+			msg: '删除失败',
 			code: 500
 		}
 		if (data.length === 0) {
 			res.end(JSON.stringify(result))
 		} else {
-			result.msg = 'success'
+			result.msg = '删除成功'
 			result.code = 200
 			result.result = true
 			res.end(JSON.stringify(result))

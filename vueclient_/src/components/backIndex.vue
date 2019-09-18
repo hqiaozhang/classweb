@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import { getCookie } from '@/utils/util'
 	var pageTitleObj = {
 		indexContent:"网站首页",
 		adminList:"后台人员",
@@ -75,12 +76,20 @@
 	  name: 'backlogin',
 	  data () {
 	    return {
+					username: getCookie('admin_token'),
 					search_box_fouce:false,
 					showExit:false,
 					pageTitle: pageTitleObj[ this.$route.path.substr( this.$route.path.lastIndexOf("/")+1 ) ] || "网站首页"
 	    }
-	  },
+		},
+		mounted() {
+ 
+			if(!this.username) {
+				this.$router.push({path:'/'});
+			}
+		},
 	  methods:{
+
 			focusFn(){  //搜索框获取焦点，添加class
 				this.search_box_fouce = true;
 			},
@@ -91,12 +100,12 @@
 				this.showExit = !this.showExit
 			},
 			logout(){ //退出系统
-				var _this = this;
+	 
 				this.$reqs.post("/users/logout",{
 					
-				}).then(function(result){
+				}).then((result) => {
 					//成功
-					_this.$router.push({path:'/'});
+					this.$router.push({path:'/'});
 				}).catch(function (error) {
 					//失败
 			    console.log(error)

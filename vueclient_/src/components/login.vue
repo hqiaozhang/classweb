@@ -40,9 +40,11 @@
 						password:this.password
 				}).then((result) => { 
 						let data = result.data
+					
 					if(data.msg){
 						alert(data.msg);
 					}else{
+							console.log('data', data)
 						this.$router.push({path:'/backIndex/indexContent'});
 					}
 					this.disablebtn = false;

@@ -1,7 +1,8 @@
 'use strict'
 const path = require('path')
-const config = require('../config')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const config = require('./base.config')
+ 
+const HtmlIncludeAssetsPlugin = require('html-webpack-include-assets-plugin')
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
@@ -10,63 +11,20 @@ exports.assetsPath = function (_path) {
   return path.posix.join(assetsSubDirectory, _path)
 }
 
-exports.cssLoaders = function (options) {
-  options = options || {}
-
-  const cssLoader = {
-    loader: 'css-loader',
-    options: {
-      minimize: process.env.NODE_ENV === 'production',
-      sourceMap: options.sourceMap
-    }
-  }
-
-  // generate loader string to be used with extract text plugin
-  function generateLoaders (loader, loaderOptions) {
-    const loaders = [cssLoader]
-    if (loader) {
-      loaders.push({
-        loader: loader + '-loader',
-        options: Object.assign({}, loaderOptions, {
-          sourceMap: options.sourceMap
-        })
-      })
-    }
-
-    // Extract CSS when that option is specified
-    // (which is the case during production build)
-    if (options.extract) {
-      return ExtractTextPlugin.extract({
-        use: loaders,
-        fallback: 'vue-style-loader'
-      })
-    } else {
-      return ['vue-style-loader'].concat(loaders)
-    }
-  }
-
-  // https://vue-loader.vuejs.org/en/configurations/extract-css.html
-  return {
-    css: generateLoaders(),
-    postcss: generateLoaders(),
-    less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
-    stylus: generateLoaders('stylus'),
-    styl: generateLoaders('stylus')
-  }
+/**
+ *  获取项目下某个文件的绝对路径
+ *  @param    {string}  dir 相对于项目根目录的路径
+ *  @return   {string}  文件的绝对路径
+ */
+exports.resolve = function (dir) {
+  return path.join(__dirname, '..', dir)
 }
+ 
 
-// Generate loaders for standalone style files (outside of .vue)
-exports.styleLoaders = function (options) {
-  const output = []
-  const loaders = exports.cssLoaders(options)
-  for (const extension in loaders) {
-    const loader = loaders[extension]
-    output.push({
-      test: new RegExp('\\.' + extension + '$'),
-      use: loader
-    })
-  }
-  return output
+exports.htmlIncludeAssets = function() {
+  return new HtmlIncludeAssetsPlugin({
+    assets: [
+      'static/scripts/vendor.dll.js'],
+    append: false // false 在其他资源的之前添加 true 在其他资源之后添加
+  })
 }

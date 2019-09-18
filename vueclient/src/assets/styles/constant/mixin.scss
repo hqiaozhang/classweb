@@ -1,0 +1,44 @@
+@mixin white_panelbg1 {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: inset 0 -1px 0 0 rgba(0,0,0,0.10);
+}
+
+@mixin set_icon {
+  float: left;
+  cursor: pointer;
+  font-size: 12px;
+  font-style: normal;
+  &::before {
+    content: "";
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+@mixin set_icon_after {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  content: "";
+}
+
+@mixin footer_fixed {
+  position: fixed;
+  bottom: 12px;
+  width: calc(100% - 264px);
+  z-index: 99;
+  height: 72px;
+  background: #ebeef6;
+  &::before,
+  &::after {
+    height: 15px;
+    content: "";
+    background:#ebeef6;
+    width: 100%;
+    display: block;
+    float: left;
+  }
+}

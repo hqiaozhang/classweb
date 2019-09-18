@@ -1,24 +1,16 @@
 let mongo = require("mongodb");
 let MongoClient = mongo.MongoClient;
 let assert = require('assert');
+let guid  = require('./utils')
+ 
+
 let url = require('url');
 let host = "localhost";
 let port = "27017";
 let Urls = 'mongodb://localhost:27017/classweb';
 // classweb  ===> 自动创建一个
 
-/**
- * @description 生成uid
- * @returns uid
- */
-function guid() {
-  function S4() {
-    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-  }
-  return (S4() + S4() + S4() + S4() + S4() + S4() + S4() + S4());
-}
-
-//add多条数据 
+//add 添加多条数据 
 let add = function (db, collections, selector, fn) {
   let collection = db.collection(collections);
   selector.id = guid()
@@ -34,7 +26,9 @@ let add = function (db, collections, selector, fn) {
     db.close();
   });
 }
-//delete
+
+
+//delete(删除用户)
 let deletes = function (db, collections, selector, fn) {
   let collection = db.collection(collections);
   collection.deleteOne({ id: selector.id }, function (err, result) {
@@ -48,8 +42,10 @@ let deletes = function (db, collections, selector, fn) {
     db.close();
   })
 };
-//find(登录，查找用户)
-let find = function (db, collections, selector, fn) {
+
+
+//login(登录，查找用户)
+let login = function (db, collections, selector, fn) {
   let collection = db.collection(collections);
   collection.find(selector).toArray(function (err, result) {
     try {
@@ -68,7 +64,7 @@ let find = function (db, collections, selector, fn) {
 * @param {Object} {db} 已经连接的数据库
 * @param {String} {collections} 集合
 * @param {Object} {selector} 查询字段
-* @param {Function} {fn} 回调用
+* @param {Function} {fn} 回调方法
 */
 let page = function (db, collections, selector, fn) {
   let collection = db.collection(collections);
@@ -100,7 +96,7 @@ let page = function (db, collections, selector, fn) {
 * @param {Object} {db} 已经连接的数据库
 * @param {String} {collections} 集合
 * @param {Object} {selector} 查询字段
-* @param {Function} {fn} 回调用
+* @param {Function} {fn} 回调方法
 */
 let updates = function (db, collections, selector, fn) {
   let collection = db.collection(collections);
@@ -118,16 +114,17 @@ let updates = function (db, collections, selector, fn) {
   });
 }
 let methodType = {
-  login: find,
-  show: find, 
+  login: login,
+  show: login, 
   add: add,
   update: updates,
   delete: deletes,
   updatePwd: updates,
-  showCourse: find,
+  showCourse: login,
   register: add,
   page: page
 };
+
 //主逻辑    服务器  ， 请求    --》 
 // req.route.path ==》 防止前端的请求 直接操作你的数据库
 /**
@@ -136,7 +133,7 @@ let methodType = {
 * @param {Object} {res} 响应
 * @param {String} {collections} 集合
 * @param {Object} {selector} 查询字段
-* @param {Function} {fn} 回调用
+* @param {Function} {fn} 回调方法
 */
 module.exports = function (req, res, collections, selector, fn) {
   MongoClient.connect(Urls, function (err, db) {

@@ -1,0 +1,224 @@
+body {
+  font-family: "微软雅黑";
+  font-size: 12px;
+  background: #ebeef6;
+  color: #232323;
+  overflow-x: hidden;
+}
+.main_container {
+    border-radius: 6px;
+    background: #fff;
+    margin-top: 10px;
+    overflow: hidden;
+}
+.fs14_title {
+  padding: 0 16px;
+  font-size: 14px;
+  color: #1A1A1A;
+  height: 44px;
+  line-height: 44px;
+  border-bottom: 1px solid #e5e5e5;
+  font-weight: bold;
+  width: 100%;
+  &::before {
+    content: "";
+    display: inline-block;
+    border-left: 3px solid #1A1A1A;
+    padding-left: 10px;
+    height: 16px;
+    display: inline-block;
+    line-height: 16px;
+    vertical-align: middle;
+    margin-top: -3px;
+  }
+}
+
+.el-table__row {
+    .operation a {
+        color: #498FFF;
+        cursor: pointer;
+        &:last-child::after {
+            display: none;
+        }
+        &::after {
+            content: "|";
+            display: inline-block;
+            padding: 0 5px;
+        }
+    }
+}
+
+.btn {
+    border: 1px solid #4187db;
+    color: #4187db;
+    background: #fff;
+    padding: 0 20px;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 3px;
+    transition: all 0.5s ease;
+    outline: none;
+    margin-right: 10px;
+    cursor: pointer;
+    i {
+        margin-right: 4px;
+    }
+}
+
+// 新增，删除，按钮组
+.right_buttons {
+  float: right;
+  button {
+      line-height: 24px;
+      border: none;
+      background: none;
+      font-size: 12px;
+      padding: 0 0 0 8px;
+      color: #498FFF;
+      &::before {
+          content: "";
+          display: inline-block;
+          vertical-align: middle;
+          width: 24px;
+          height: 24px;
+          margin-top: -2px;
+      }
+      &::after {
+          width: 1px;
+          height: 12px;
+          content: "";
+          background: #498FFF;
+          display: inline-block;
+          margin-left: 18px;
+          margin-top: 6px;
+          float: right;
+      }
+      &:last-child {
+          &::after {
+              display: none !important;
+          }
+      }
+  }
+  .add_button {
+      &::before {
+          background: url("../images/icons8-add1.4x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  .inport_button {
+      &::before {
+          background: url("../images/icons8-inport1.4x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  .del_button {
+      color: #FD4B5A;
+      &::before {
+          background: url("../images/icons8-delete_red1.4x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  .export_button {
+      color: #FD4B5A;
+      &::before {
+          background: url("../images/icons8-export1.4x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  .export_blue_button {
+      &::before {
+          background: url("../images/icons8-export1.4x_blue.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  // 关联
+  .relation_button {
+      &::before {
+          background: url("../images/icons8-attach1.4x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  // 生成设备编号
+  .eqnum_button {
+      &::before {
+          background: url("../images/icons8-numbered_list2x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  // 移入移出
+  .export_inport_button {
+      &::before {
+          background: url("../images/icons8-inportex1.4x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  // 生产测试完成
+  .production_button {
+      &::before {
+          background: url("../images/icons8-sandbox2x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  // 校验
+  .check_button {
+      &::before {
+          background: url("../images/icons8-new_file2x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  // 修改 IP
+  .modifyip_button {
+      &::before {
+          background: url("../images/icons8-networking_manager2x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  // 设备控制
+  .eqcontrol_button {
+      &::before {
+          background: url("../images/icons8-wacom_tablet2x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  // 运维中
+  .operation_button {
+      &::before {
+          background: url("../images/icons8-administrative_tools2x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  // 运维结束
+  .operation_end_button {
+      &::before {
+          background: url("../images/icons8-administrative2x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  // 校准完成(文件)
+  .cal_completed_button {
+      &::before {
+          background: url("../images/icons8-checkdata2x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  // 报废
+  .scrap_button {
+      &::before {
+          background: url("../images/icons8-file_delete2x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  // 隐藏真实寿命
+  .invisible {
+      &::before {
+          background: url("../images/icons8-invisible2x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+  .clear_icon {
+      &::before {
+          background: url("../images/icons8-clear2x.png") no-repeat;
+          background-size: 100% 100%;
+      }
+  }
+}
